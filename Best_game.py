@@ -29,39 +29,41 @@ class Window:
         processor = sdl2.ext.TestEventProcessor()
         processor.run(self.window)
 
-    def draw_raketa(self):
+    def draw_raketa(self, turn, l):
         for i in range(100):
-            Window.d1_point(self, 500 + i, 710, self.window.get_surface(), (0, 0, 0))
+            Window.d1_point(self, 500 + turn + i, 710, self.window.get_surface(), (l, l, l))
         for i in range(150):
-            Window.d1_point(self, 560, 710 - i, self.window.get_surface(), (0, 0, 0))
+            Window.d1_point(self, 560 + turn, 710 - i, self.window.get_surface(), (l, l, l))
         for i in range(150):
-            Window.d1_point(self, 500, 710 - i, self.window.get_surface(), (0, 0, 0))
+            Window.d1_point(self, 500 + turn, 710 - i, self.window.get_surface(), (l, l, l))
         for i in range(60):
-            Window.d1_point(self, 500 + i, 561, self.window.get_surface(), (0, 0, 0))
+            Window.d1_point(self, 500 + turn + i, 561, self.window.get_surface(), (l, l, l))
         for i in range(40):
-            Window.d1_point(self, 600 - i, 710 - i, self.window.get_surface(), (0, 0, 0))
+            Window.d1_point(self, 600 + turn - i, 710 - i, self.window.get_surface(), (l, l, l))
         for i in range(30):
-            Window.d1_point(self, 500 + i, 561 - i, self.window.get_surface(), (0, 0, 0))
+            Window.d1_point(self, 500 + turn + i, 561 - i, self.window.get_surface(), (l, l, l))
         for i in range(30):
-            Window.d1_point(self, 560 - i, 561 - i, self.window.get_surface(), (0, 0, 0))
+            Window.d1_point(self, 560 + turn - i, 561 - i, self.window.get_surface(), (l, l, l))
         for i in range(50):
-            Window.d1_point(self, 560 + i, 635, self.window.get_surface(), (0, 0, 0))
+            Window.d1_point(self, 560 + turn + i, 635, self.window.get_surface(), (l, l, l))
         for i in range(50):
-            Window.d1_point(self, 500 - i, 635, self.window.get_surface(), (0, 0, 0))
+            Window.d1_point(self, 500 + turn - i, 635, self.window.get_surface(), (l, l, l))
         for i in range(50):
-            Window.d1_point(self, 450 + i, 635 - i, self.window.get_surface(), (0, 0, 0))
+            Window.d1_point(self, 450 + turn + i, 635 - i, self.window.get_surface(), (l, l, l))
         for i in range(50):
-            Window.d1_point(self, 610 - i, 635 - i, self.window.get_surface(), (0, 0, 0))
+            Window.d1_point(self, 610 + turn - i, 635 - i, self.window.get_surface(), (l, l, l))
         for i in range(40):
-            Window.d1_point(self, 500 - i, 710, self.window.get_surface(), (0, 0, 0))
+            Window.d1_point(self, 500 + turn - i, 710, self.window.get_surface(), (l, l, l))
         for i in range(40):
-            Window.d1_point(self, 461 + i, 710 - i, self.window.get_surface(), (0, 0, 0))
-
+            Window.d1_point(self, 461 + turn + i, 710 - i, self.window.get_surface(), (l, l, l))
     def run(self):
         sdl2.ext.init()
         self.window.show()
         running = True
         Window.fill_Window(self, (192, 192, 192))
+        k = 0
+        z = 0
+        s = 192
         while running:
             events = sdl2.ext.get_events()
             for event in events:
@@ -70,9 +72,17 @@ class Window:
                     break
                 elif event.type == sdl2.SDL_KEYDOWN:
                     if event.key.keysym.sym == sdl2.SDLK_UP:
-                        Window.draw_raketa(self)
+                        Window.draw_raketa(self, 0, z)
+                    if event.key.keysym.sym == sdl2.SDLK_LEFT:
+                        Window.draw_raketa(self, k, s)
+                        k -= 5
+                        Window.draw_raketa(self, k, z)
+                    if event.key.keysym.sym == sdl2.SDLK_RIGHT:
+                        Window.draw_raketa(self, k, s)
+                        k += 5
+                        Window.draw_raketa(self, k, z)
 
-
+                        
                 elif event.type == sdl2.SDL_CONTROLLER_BUTTON_X:
                     Window.d_point(self, 10, 20, self.window.get_surface(), (0, 0, 0))
                     Window.d_point(self, 11, 20, self.window.get_surface(), (0, 0, 0))
